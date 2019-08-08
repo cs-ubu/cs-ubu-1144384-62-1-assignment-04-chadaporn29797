@@ -109,7 +109,7 @@ class _AppHomePageState extends State<AppHomePage> {
   }
 
   Widget loadingWidget(BuildContext context) {
-    return Column(children: <Widget>[Text('loading....'), CircularProgressIndicator(), Text('Click the button')]);
+    return Column(children: <Widget>[Text('loading....'), CircularProgressIndicator(), Text('กดตรงนี้')]);
   }
 
   @override
