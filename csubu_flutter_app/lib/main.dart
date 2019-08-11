@@ -52,7 +52,7 @@ class _AppHomePageState extends State<AppHomePage> {
   var _page = 0;
 
   _getStudents() async {
-    var url = 'http://cs.sci.ubu.ac.th:7512/topic-1/60114440042/_search?from=${_page*10}&size=10';
+    var url = 'http://cs.sci.ubu.ac.th:7512/topic-1/60114440042/_search?from=${_page*4}&size=4';
     const headers = { 'Content-Type': 'application/json; charset=utf-8' };
     const query = { 'query': { 'match_all': {} } };
     final response = await http.post(url, headers: headers, body: json.encode(query));
@@ -91,16 +91,50 @@ class _AppHomePageState extends State<AppHomePage> {
           return ListTile(
             title: Row(
                   children: <Widget>[
-                    // Image.asset('assets/images/csubu-bw.png', width: 48, height: 48),
-                    CircleAvatar(backgroundImage: NetworkImage('${student["img"]}')),
-                    Expanded(child: Text(student["name"]))
+                    Image.network('${student["img"]}', width: 100, height: 100),
+                    // CircleAvatar(backgroundImage: NetworkImage('${student["img"]}')),
+                    // Expanded(child: Text(student["name"])
+                    Expanded(child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('🐰${student["name"]}'),
+                        Text('Price: ${student["price"]} บาท'),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.star, color: Colors.amber[500]),
+                            Icon(Icons.star, color: Colors.amber[500]),
+                            Icon(Icons.star, color: Colors.amber[500]),
+                            Icon(Icons.star, color: Colors.amber[500]),
+                            Icon(Icons.star, color: Colors.black),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(child:
+                              Icon(Icons.share, color: Colors.black26)
+                              ),
+                            Expanded(child:
+                              Icon(Icons.thumb_up, color: Colors.lightBlue),
+                              )
+                            ,
+                            Expanded(child:
+                              Icon(Icons.favorite, color: Colors.pink)
+                              )
+                          ]
+                        )
+                      ],
+                    ),
+                    ),
                   ]
                 ),
-            subtitle: Column(
+            subtitle: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Price: ${student["price"]}'),
-                Text('Detail: ${student["detail"]}')
+                Expanded(child:
+                  Text('Detail: ${student["detail"]}'),
+                  ),
               ]
              )
           );
@@ -109,7 +143,7 @@ class _AppHomePageState extends State<AppHomePage> {
   }
 
   Widget loadingWidget(BuildContext context) {
-    return Column(children: <Widget>[Text('loading....'), CircularProgressIndicator(), Text('กดตรงนี้')]);
+    return Column(children: <Widget>[Text('loading....'), CircularProgressIndicator(), Text('รอแปบ')]);
   }
 
   @override
@@ -127,7 +161,7 @@ class _AppHomePageState extends State<AppHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Text('$_page'), // Icon(Icons.add),
+        child: Text('$_page 👉'), // Icon(Icons.add),
       )
     );
   }
